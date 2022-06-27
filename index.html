@@ -5,7 +5,63 @@
 </head>
 <body>
     <div id="app">
-
+        <div id="welcome-page" v-if="showPage == 'welcome'">
+            <h1>Welcome</h1> <br>
+            <button v-on:click="enterStore()">Enter</button>
+        </div>
+        <div id="store-page" v-if="showPage == 'store'">
+            <div id="store-nav">
+                <h1>Store</h1>
+                <button v-on:click="storeFilter = 'electronics'">Electronics</button>
+                <button v-on:click="storeFilter = 'jewelery'">Jewelery</button>
+                <button v-on:click="storeFilter = 'mens clothing'">Men's Clothing</button>
+                <button v-on:click="storeFilter = 'womens clothing'">Women's Clothing</button>
+                <button v-on:click="storeFilter = 'none'">Clear Filters</button>
+                <button v-on:click="viewCart()">View Cart</button>
+            </div>
+            <div class="product-list">
+                <div v-if="storeFilter == 'none'">
+                    <product v-for="(product, index) in list"
+                            v-bind:item="product"
+                            v-bind:cart="customerCart"
+                            v-bind:key="index">
+                    </product>
+                </div>
+                <div v-else-if="storeFilter == 'electronics'">
+                    <product v-for="(product, index) in electronicsFilter"
+                            v-bind:item="product"
+                            v-bind:cart="customerCart"
+                            v-bind:key="index">
+                    </product>
+                </div>
+                <div v-else-if="storeFilter == 'jewelery'">
+                    <product v-for="(product, index) in jeweleryFilter"
+                            v-bind:item="product"
+                            v-bind:cart="customerCart"
+                            v-bind:key="index">
+                    </product>
+                </div>
+                <div v-else-if="storeFilter == 'mens clothing'">
+                    <product v-for="(product, index) in menClothingFilter"
+                            v-bind:item="product"
+                            v-bind:cart="customerCart"
+                            v-bind:key="index">
+                    </product>
+                </div>
+                <div v-else-if="storeFilter == 'womens clothing'">
+                    <product v-for="(product, index) in womenClothingFilter"
+                            v-bind:item="product"
+                            v-bind:cart="customerCart"
+                            v-bind:key="index">
+                    </product>
+                </div>
+            </div>
+        </div>
+        <div id="check-out" v-if="showPage == 'cart'">
+            <h1>Cart</h1>
+            <button v-on:click="enterStore()">Continue shopping</button>
+            <view-customer-cart v-bind:cart="customerCart" v-bind:money="customerTotal"></view-customer-cart>
+        </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
     <script src="app.js"></script>
