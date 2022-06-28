@@ -18,7 +18,7 @@
                 <button v-on:click="storeFilter = 'mens clothing'">Men's Clothing</button>
                 <button v-on:click="storeFilter = 'womens clothing'">Women's Clothing</button>
                 <button v-on:click="storeFilter = 'none'">Clear Filters</button>
-                <button v-on:click="viewCart()">View Cart</button>
+                <button v-on:click="viewCart()">View Cart {{ customerCart.length }}</button>
             </div>
             <div class="product-list">
                 <div v-if="storeFilter == 'none'">
@@ -58,10 +58,14 @@
                 </div>
             </div>
         </div>
-        <div id="check-out" v-if="showPage == 'cart'">
+        <div id="cart-page" v-if="showPage == 'cart'">
             <h1>Cart</h1>
             <button v-on:click="enterStore()">Continue shopping</button>
-            <view-customer-cart v-bind:cart="customerCart" v-bind:money="customerTotal"></view-customer-cart>
+            <view-customer-cart v-bind:cart="customerCart" 
+            v-bind:money="customerTotal" v-bind:buy="checkoutPage"></view-customer-cart>
+        </div>
+        <div id="checkout-page" v-if="showPage == 'payment'">
+            <credit-card-page v-bind:money="customerTotal"></credit-card-page>
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>

@@ -26,7 +26,8 @@ Vue.component ('product', {
 Vue.component ('view-customer-cart', {
     props: [
         "cart",
-        "money"
+        "money",
+        "buy"
     ],
     template: `<div class="cart-container">
                     <div class="product-holder" v-for="(item, index) in cart">
@@ -38,6 +39,7 @@ Vue.component ('view-customer-cart', {
                         </div>
                     </div>
                     <h2>Total: $ {{money}}</h2>
+                    <button v-on:click="buy">Proceed to Checkout</button>
                 </div>`,
     data: function () {
         return {}
@@ -47,6 +49,40 @@ Vue.component ('view-customer-cart', {
             this.cart.splice(index, 1);
         }
     },
+});
+Vue.component ('credit-card-page', {
+    props: [
+        "money"
+    ],
+    template: `<div id="credit-card-grid">
+                    <div class="total-area">
+                        <h3>Items in cart: $ {{money}}</h3>
+                        <h3>Tax: $ {{tax}}</h3>
+                        <label>How many miles away do you live?</label>
+                        <input type="number" v-model="distance">
+                        <h3>Shipping: $ {{shipping}}</h3>
+                        <h2>Total: $ {{total}}</h2>
+                    </div>
+                    <div class="credit-info">
+                        <h3>credit card here</h3>
+                    </div>
+                </div>`,
+    data: function () {return{distance: 0}},
+    methods: {},
+    computed: {
+        tax: function(){
+            let taxAmount = this.money * .08;
+            return Math.round(taxAmount * 100)/100;
+        },
+        shipping: function(){
+            let shippingAmount = this.distance * .035;
+            return Math.round(shippingAmount * 100)/100;
+        },
+        total: function(){
+            let totalAmount = this.money + this.tax + this.shipping;
+            return Math.round(totalAmount * 100)/100;
+        }
+    }
 });
 
 var app = new Vue ({
@@ -67,6 +103,9 @@ var app = new Vue ({
         },
         viewCart: function () {
             this.showPage = 'cart';
+        },
+        checkoutPage: function () {
+            this.showPage = 'payment';
         }
     },
     created: async function () {
@@ -93,7 +132,7 @@ var app = new Vue ({
             this.customerCart.forEach((item)=>{
                 price += item.price;
             })
-            return price;
+            return Math.round(price*100)/100;
         }
     }
 });
