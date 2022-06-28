@@ -7,10 +7,12 @@ Vue.component ('product', {
     ],
     template: `<div class="product-holder">
                     <img class="product-image" v-bind:src="item.image">
-                    {{ item.title }}
-                    {{ item.description }}
-                    {{ item.price }}
-                    <button v-on:click="addToCart(item)">Add To Cart</button>
+                    <div class="item-description">
+                        <h1>{{ item.title }}</h1>
+                        <p>{{ item.description }}</p>
+                        <h2>$ {{ item.price }}</h2>
+                        <button v-on:click="addToCart(item)">Add To Cart</button>
+                    </div>
                 </div>`,
     data: function (){
         return {}
@@ -27,11 +29,13 @@ Vue.component ('view-customer-cart', {
         "money"
     ],
     template: `<div class="cart-container">
-                    <div class="cart-item" v-for="(item, index) in cart">
+                    <div class="product-holder" v-for="(item, index) in cart">
                         <img class="product-image" v-bind:src="item.image">
-                        {{ item.title }}
-                        {{ item.price }}
-                        <button v-on:click="removeFromCart(index)">Remove</button>
+                        <div class="item-description">
+                            <h1>{{ item.title }}</h1>
+                            <h2>$ {{ item.price }}</h2>
+                            <button v-on:click="removeFromCart(index)">Remove</button>
+                        </div>
                     </div>
                     <h2>Total: $ {{money}}</h2>
                 </div>`,

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+    <link rel="stylesheet" href="style.css">
 <head>
     <title>Web Store</title>
 </head>
@@ -10,8 +11,8 @@
             <button v-on:click="enterStore()">Enter</button>
         </div>
         <div id="store-page" v-if="showPage == 'store'">
+            <h1>Store</h1>
             <div id="store-nav">
-                <h1>Store</h1>
                 <button v-on:click="storeFilter = 'electronics'">Electronics</button>
                 <button v-on:click="storeFilter = 'jewelery'">Jewelery</button>
                 <button v-on:click="storeFilter = 'mens clothing'">Men's Clothing</button>
